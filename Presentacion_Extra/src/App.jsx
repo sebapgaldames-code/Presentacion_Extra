@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 const docs = import.meta.glob('../docs/*.md', { as: 'raw', eager: true })
@@ -21,11 +21,8 @@ const parseMarkdown = (markdown) => {
   let inCode = false
 
   const closeList = () => {
-    if (listType === 'ul') {
-      result.push('</ul>')
-    } else if (listType === 'ol') {
-      result.push('</ol>')
-    }
+    if (listType === 'ul') result.push('</ul>')
+    if (listType === 'ol') result.push('</ol>')
     listType = null
   }
 
@@ -104,7 +101,6 @@ const slides = Object.entries(docs)
       .find((line) => line.startsWith('# '))
       ?.replace(/^#\s*/, '')
       .trim() || fileName
-
     return { fileName, title, content }
   })
   .sort((a, b) => a.fileName.localeCompare(b.fileName))
@@ -117,41 +113,37 @@ function App() {
   const goPrev = () => setCurrent((index) => Math.max(0, index - 1))
   const goNext = () => setCurrent((index) => Math.min(slides.length - 1, index + 1))
 
+  useEffect(() => {
+    const handleKey = (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'PageDown') goNext()
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') goPrev()
+    }
+
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [slides.length])
+
   return (
     <main className="presentation">
-      <header className="presentation__header">
-        <div>
-          <strong>Presentación</strong>
-          <span>Diapositiva {current + 1}/{slides.length}</span>
-        </div>
-        <nav className="presentation__nav">
-          <button onClick={() => setCurrent(0)} disabled={current === 0}>Primera</button>
-          <button onClick={goPrev} disabled={current === 0}>Anterior</button>
-          <button onClick={goNext} disabled={current === slides.length - 1}>Siguiente</button>
-          <button onClick={() => setCurrent(slides.length - 1)} disabled={current === slides.length - 1}>Última</button>
-        </nav>
-      </header>
-
       <section className="slide">
-        <h1 className="slide__title">{active?.title ?? 'Sin contenido'}</h1>
-        <div className="slide__content" dangerouslySetInnerHTML={{ __html: html }} />
-      </section>
+        <header className="slide__header">
+          <div>
+            <span className="slide__meta">Presentación</span>
+            <strong className="slide__count">Diapositiva {current + 1} / {slides.length}</strong>
+          </div>
+          <div className="slide__actions">
+            <button onClick={() => setCurrent(0)} disabled={current === 0}>Primera</button>
+            <button onClick={goPrev} disabled={current === 0}>Anterior</button>
+            <button onClick={goNext} disabled={current === slides.length - 1}>Siguiente</button>
+            <button onClick={() => setCurrent(slides.length - 1)} disabled={current === slides.length - 1}>Última</button>
+          </div>
+        </header>
 
-      <aside className="slide__toc">
-        <h2>Diapositivas</h2>
-        <ol>
-          {slides.map((slide, index) => (
-            <li key={slide.fileName}>
-              <button
-                className={index === current ? 'active' : ''}
-                onClick={() => setCurrent(index)}
-              >
-                {slide.title}
-              </button>
-            </li>
-          ))}
-        </ol>
-      </aside>
+        <article className="slide__body">
+          <h1 className="slide__title">{active?.title ?? 'Sin contenido'}</h1>
+          <div className="slide__content" dangerouslySetInnerHTML={{ __html: html }} />
+        </article>
+      </section>
     </main>
   )
 }
