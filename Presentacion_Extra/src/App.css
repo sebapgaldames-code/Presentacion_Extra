@@ -1,184 +1,191 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+.presentation {
+  min-height: 100vh;
+  padding: 24px;
+  display: grid;
+  gap: 24px;
+  background: #f5f6fb;
+  color: #111827;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
+.presentation__header {
   display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-#next-steps {
+.presentation__header strong {
+  display: block;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+}
+
+.presentation__header span {
+  display: block;
+  margin-top: 6px;
+  color: #475569;
+}
+
+.presentation__nav {
   display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.presentation__nav button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 999px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.18s ease;
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+.presentation__nav button:hover:not(:disabled) {
+  transform: translateY(-1px);
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.presentation__nav button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #94a3b8;
 }
 
-.ticks {
-  position: relative;
+.slide {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+  padding: 32px;
+  min-height: 520px;
+}
+
+.slide__title {
+  margin: 0 0 20px;
+  font-size: 2rem;
+  line-height: 1.05;
+}
+
+.slide__content {
+  line-height: 1.8;
+  color: #334155;
+}
+
+.slide__content h2,
+.slide__content h3,
+.slide__content h4 {
+  margin-top: 1.75em;
+  margin-bottom: 0.75em;
+}
+
+.slide__content p {
+  margin: 0 0 1rem;
+}
+
+.slide__content ul,
+.slide__content ol {
+  margin: 1rem 0 1rem 1.4rem;
+}
+
+.slide__content li {
+  margin: 0.35rem 0;
+}
+
+.slide__content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.slide__content code {
+  background: #f8fafc;
+  color: #0f172a;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.45rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+.slide__content pre {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 18px;
+  border-radius: 16px;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+
+.slide__content blockquote {
+  margin: 1.25rem 0;
+  padding-left: 16px;
+  border-left: 4px solid #2563eb;
+  color: #475569;
+}
+
+.slide__toc {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.slide__toc h2 {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+
+.slide__toc ol {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.slide__toc button {
   width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: #0f172a;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
+.slide__toc button:hover {
+  background: #e2e8f0;
+}
+
+.slide__toc button.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+@media (min-width: 1024px) {
+  .presentation {
+    grid-template-columns: 1fr 320px;
+    align-items: start;
   }
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
+  .slide {
+    min-height: 620px;
   }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
+}
+
+@media (max-width: 768px) {
+  .presentation {
+    padding: 16px;
+  }
+
+  .presentation__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .slide__toc {
+    width: 100%;
   }
 }
