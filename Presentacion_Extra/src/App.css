@@ -11,8 +11,8 @@
 .slide {
   width: min(1300px, 100%);
   max-width: 1200px;
-  background: rgba(15, 23, 42, 0.98);
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: var(--slide-bg, rgba(15, 23, 42, 0.98));
+  border: 1px solid var(--accent-border, rgba(148, 163, 184, 0.2));
   border-radius: 32px;
   box-shadow: 0 40px 120px rgba(15, 23, 42, 0.4);
   padding: 48px 56px;
@@ -52,7 +52,7 @@
 
 .slide__actions button {
   padding: 12px 18px;
-  border: 1px solid rgba(148, 163, 184, 0.32);
+  border: 1px solid var(--accent-weak, rgba(148, 163, 184, 0.32));
   border-radius: 999px;
   background: rgba(30, 41, 59, 0.9);
   color: #f8fafc;
@@ -63,7 +63,7 @@
 
 .slide__actions button:hover:not(:disabled) {
   transform: translateY(-1px);
-  border-color: rgba(96, 165, 250, 0.65);
+  border-color: var(--accent, rgba(96, 165, 250, 0.65));
 }
 
 .slide__actions button:disabled {
@@ -81,7 +81,7 @@
   font-size: clamp(2.5rem, 3vw, 4.5rem);
   line-height: 1.05;
   letter-spacing: -0.04em;
-  color: #f8fafc;
+  color: var(--accent, #f8fafc);
 }
 
 .slide__content {
@@ -114,7 +114,7 @@
 }
 
 .slide__content a {
-  color: #60a5fa;
+  color: var(--accent, #60a5fa);
   text-decoration: underline;
 }
 
@@ -139,7 +139,7 @@
 .slide__content blockquote {
   margin: 1.5rem 0;
   padding: 1rem 1.25rem;
-  border-left: 4px solid #60a5fa;
+  border-left: 4px solid var(--accent, #60a5fa);
   background: rgba(148, 163, 184, 0.08);
   color: #cbd5e1;
 }

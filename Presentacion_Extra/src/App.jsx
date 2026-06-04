@@ -108,6 +108,25 @@ const slides = Object.entries(docs)
 function App() {
   const [current, setCurrent] = useState(0)
   const active = slides[current]
+  const getTheme = (slide) => {
+    const name = (slide?.fileName || slide?.title || '').toLowerCase()
+    const t = (k, accent, weak, bg, border) => ({ key: k, accent, weak, bg, border })
+
+    if (!name) return t('default', '#60a5fa', 'rgba(96,165,250,0.08)', 'linear-gradient(180deg,#0b1220,#071029)', 'rgba(96,165,250,0.2)')
+
+    if (name.includes('resumen')) return t('resumen', '#60a5fa', 'rgba(96,165,250,0.08)', 'linear-gradient(180deg,#021428,#07203a)', 'rgba(96,165,250,0.2)')
+    if (name.includes('marco')) return t('marco', '#7c3aed', 'rgba(124,58,237,0.08)', 'linear-gradient(180deg,#130627,#2b0b3a)', 'rgba(124,58,237,0.2)')
+    if (name.includes('delitos')) return t('delitos', '#ef4444', 'rgba(239,68,68,0.08)', 'linear-gradient(180deg,#2a0b0b,#210808)', 'rgba(239,68,68,0.2)')
+    if (name.includes('compar') || name.includes('comparasion')) return t('comparacion', '#8b5cf6', 'rgba(139,92,246,0.08)', 'linear-gradient(180deg,#0f0226,#21063a)', 'rgba(139,92,246,0.2)')
+    if (name.includes('respons') || name.includes('responsabilidades')) return t('responsabilidades', '#06b6d4', 'rgba(6,182,212,0.08)', 'linear-gradient(180deg,#022626,#032a2d)', 'rgba(6,182,212,0.2)')
+    if (name.includes('datos')) return t('datos', '#10b981', 'rgba(16,185,129,0.08)', 'linear-gradient(180deg,#062617,#072b1f)', 'rgba(16,185,129,0.2)')
+    if (name.includes('conclusion') || name.includes('conclusiones')) return t('conclusiones', '#f59e0b', 'rgba(245,158,11,0.08)', 'linear-gradient(180deg,#2a1a00,#211400)', 'rgba(245,158,11,0.2)')
+    if (name.includes('prompt') || name.includes('prompts')) return t('prompts', '#6366f1', 'rgba(99,102,241,0.08)', 'linear-gradient(180deg,#07102a,#0b1238)', 'rgba(99,102,241,0.2)')
+
+    return t('default', '#60a5fa', 'rgba(96,165,250,0.08)', 'linear-gradient(180deg,#011627,#04264a)', 'rgba(96,165,250,0.2)')
+  }
+
+  const theme = getTheme(active)
   const html = useMemo(() => (active ? parseMarkdown(active.content) : ''), [active])
 
   const goPrev = () => setCurrent((index) => Math.max(0, index - 1))
@@ -125,7 +144,15 @@ function App() {
 
   return (
     <main className="presentation">
-      <section className="slide">
+      <section
+        className="slide"
+        style={{
+          ['--accent']: theme.accent,
+          ['--accent-weak']: theme.weak,
+          ['--slide-bg']: theme.bg,
+          ['--accent-border']: theme.border,
+        }}
+      >
         <header className="slide__header">
           <div>
             <span className="slide__meta">Presentación</span>
